@@ -33,6 +33,10 @@ const Transaction = {
     Transaction.all.push(transaction)
     App.reload()
   },
+  remove(index) {
+    Transaction.all.splice(index, 1)
+    App.reload()
+  },
 
   incomes() {
     let income = 0
@@ -133,8 +137,7 @@ const App = {
 
 App.init()
 
-Transaction.add({
-  description: 'Energia',
-  amount: -45000,
-  date: '28/02/2020'
-})
+Transaction.remove(0)
+Transaction.remove(0)
+Transaction.remove(0)
+Transaction.remove(0)
