@@ -19,7 +19,7 @@ const transactions = [
   {
     id: 2,
     description: 'Criação website',
-    amount: 500000,
+    amount: 600000,
     date: '23/01/2021'
   },
   {
@@ -32,13 +32,34 @@ const transactions = [
 
 const Transaction = {
   incomes() {
-    //Somar entradas
+    let income = 0
+    //Pega todas as transações
+    // Para cada transação
+    transactions.forEach(transaction => {
+      //Se ela for maior que zero
+      if (transaction.amount > 0) {
+        //Somar a uma varíavel e retornar a varíavel
+        income += transaction.amount
+      }
+    })
+    return income
   },
   expenses() {
-    //somar as saídas
+    let expense = 0
+    //Pega todas as transações
+    // Para cada transação
+    transactions.forEach(transaction => {
+      //Se ela for menor que zero
+      if (transaction.amount < 0) {
+        //Somar a uma varíavel e retornar a varíavel
+        expense += transaction.amount
+      }
+    })
+
+    return expense
   },
   total() {
-    //entradas - saídas
+    return Transaction.incomes() + Transaction.expenses()
   }
 }
 
@@ -64,6 +85,17 @@ const DOM = {
     `
 
     return html
+  },
+  updateBalance() {
+    document.getElementById('incomeDisplay').innerHTML = Utils.formatCurrency(
+      Transaction.incomes()
+    )
+    document.getElementById('expenseDisplay').innerHTML = Utils.formatCurrency(
+      Transaction.expenses()
+    )
+    document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(
+      Transaction.total()
+    )
   }
 }
 
@@ -83,3 +115,5 @@ const Utils = {
 transactions.forEach(function (transaction) {
   DOM.addTransaction(transaction)
 })
+
+DOM.updateBalance()
