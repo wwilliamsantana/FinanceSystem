@@ -11,19 +11,16 @@ const Modal = {
 
 const transactions = [
   {
-    id: 1,
     description: 'Luz',
     amount: -50000,
     date: '23/01/2021'
   },
   {
-    id: 2,
     description: 'Criação website',
     amount: 600000,
     date: '23/01/2021'
   },
   {
-    id: 1,
     description: 'Internet',
     amount: -20000,
     date: '23/01/2021'
@@ -31,11 +28,17 @@ const transactions = [
 ]
 
 const Transaction = {
+  all: transactions,
+  add(transaction) {
+    Transaction.all.push(transaction)
+    App.reload()
+  },
+
   incomes() {
     let income = 0
     //Pega todas as transações
     // Para cada transação
-    transactions.forEach(transaction => {
+    Transaction.all.forEach(transaction => {
       //Se ela for maior que zero
       if (transaction.amount > 0) {
         //Somar a uma varíavel e retornar a varíavel
@@ -48,7 +51,7 @@ const Transaction = {
     let expense = 0
     //Pega todas as transações
     // Para cada transação
-    transactions.forEach(transaction => {
+    Transaction.all.forEach(transaction => {
       //Se ela for menor que zero
       if (transaction.amount < 0) {
         //Somar a uma varíavel e retornar a varíavel
@@ -96,6 +99,9 @@ const DOM = {
     document.getElementById('totalDisplay').innerHTML = Utils.formatCurrency(
       Transaction.total()
     )
+  },
+  clearTransaction() {
+    DOM.transactionsContainer.innerHTML = ''
   }
 }
 
@@ -112,8 +118,23 @@ const Utils = {
   }
 }
 
-transactions.forEach(function (transaction) {
-  DOM.addTransaction(transaction)
-})
+const App = {
+  init() {
+    Transaction.all.forEach(function (transaction) {
+      DOM.addTransaction(transaction)
+    })
+    DOM.updateBalance()
+  },
+  reload() {
+    DOM.clearTransaction()
+    App.init()
+  }
+}
 
-DOM.updateBalance()
+App.init()
+
+Transaction.add({
+  description: 'Energia',
+  amount: -45000,
+  date: '28/02/2020'
+})
