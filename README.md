@@ -10,7 +10,7 @@
 
 ## :computer: Sobre  
 <p>
-Sistema fiancneiro, para controlar entradas e saídas. 
+Sistema fiancneiro, para controlar entradas e saídas, realizando tal cálculo. 
 </p>
 <p>
 Para adicionar uma despesa, coloque o " - " na frente do valor da transição.
